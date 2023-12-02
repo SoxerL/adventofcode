@@ -1,5 +1,8 @@
 package `2023`
 
+/**
+ * 2023 - Day 1
+ */
 class Trebuchet {
 
     /**
