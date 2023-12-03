@@ -2,6 +2,9 @@ package `2023`
 
 /**
  * 2023 - Day 2
+ * Each line shows a draw from a bag
+ * Part 1: which games would have been possible if the bag contained only 12 red cubes, 13 green cubes, and 14 blue cubes
+ * Part 2: what is the fewest number of cubes of each color that could have been in the bag to make the game possible?
  */
 class CubeConundrum {
 

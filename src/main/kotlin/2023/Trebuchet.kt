@@ -2,6 +2,9 @@ package `2023`
 
 /**
  * 2023 - Day 1
+ * Calculate sum of all values in input
+ * Values are two-digit numbers constructed from first digit and last digit found per line
+ * digits can be literal or spelled-out
  */
 class Trebuchet {
 

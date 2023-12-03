@@ -6,7 +6,7 @@ import kotlin.test.assertEquals
 
 class CubeConundrumTest {
 
-    lateinit var cubeConundrum: CubeConundrum
+    private lateinit var cubeConundrum: CubeConundrum
 
     @BeforeEach
     fun setup() {
@@ -26,7 +26,7 @@ class CubeConundrumTest {
     }
 
     @Test
-    fun `parseGameNumber can return mutli-digit numbers from alphanumeric String`() {
+    fun `parseGameNumber can return multi-digit numbers from alphanumeric String`() {
         val res = cubeConundrum.parseGameNumber("some-Game 78: polmbh 12 blue,$ red")
         assertEquals(78, res)
     }
