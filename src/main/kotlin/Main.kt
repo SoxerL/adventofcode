@@ -1,5 +1,6 @@
 import `2023`.CubeConundrum
 import `2023`.GearRatios
+import `2023`.Scratchcards
 import `2023`.Trebuchet
 
 fun main() {
@@ -21,4 +22,10 @@ fun main() {
     val day3Res = gearRatios.execute("day3-input")
     println("result day 3: part 1 sum: ${day3Res.first} part 2 sum: ${day3Res.second}")
     // 553079 -> 84363105
+
+    // day4
+    val scratchcards = Scratchcards()
+    val day4Res = scratchcards.execute("day4-input")
+    print("result day 4: part 1 sum: ${day4Res.first} part 2 sum: ${day4Res.second}")
+    // 23673 -> 12263631
 }
