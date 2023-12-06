@@ -1,7 +1,4 @@
-import `2023`.CubeConundrum
-import `2023`.GearRatios
-import `2023`.Scratchcards
-import `2023`.Trebuchet
+import `2023`.*
 
 fun main() {
 
@@ -26,6 +23,12 @@ fun main() {
     // day4
     val scratchcards = Scratchcards()
     val day4Res = scratchcards.execute("day4-input")
-    print("result day 4: part 1 sum: ${day4Res.first} part 2 sum: ${day4Res.second}")
+    println("result day 4: part 1 sum: ${day4Res.first} part 2 sum: ${day4Res.second}")
     // 23673 -> 12263631
+
+    // day5
+    val fertilizer = Fertilizer()
+    val day5Res = fertilizer.execute("day5-input")
+    println("result day 5: part 1 sum: ${day5Res.first} part 2 sum: ${day5Res.second}")
+    // 289863851 -> 60568880
 }
