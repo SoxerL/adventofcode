@@ -31,4 +31,10 @@ fun main() {
     val day5Res = fertilizer.execute("day5-input")
     println("result day 5: part 1 sum: ${day5Res.first} part 2 sum: ${day5Res.second}")
     // 289863851 -> 60568880
+
+    // day6
+    val waitForIt = WaitForIt()
+    val day6Res = waitForIt.execute("day6-input")
+    println("result day 6: part 1 sum: ${day6Res.first} part 2 sum: ${day6Res.second}")
+    // 6209190 -> 28545089
 }
