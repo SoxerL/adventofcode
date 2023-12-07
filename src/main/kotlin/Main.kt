@@ -37,4 +37,10 @@ fun main() {
     val day6Res = waitForIt.execute("day6-input")
     println("result day 6: part 1 sum: ${day6Res.first} part 2 sum: ${day6Res.second}")
     // 6209190 -> 28545089
+
+    // day7
+    val camelCards = CamelCards()
+    val day7Res = camelCards.execute("day7-input")
+    println("result day 6: part 1 sum: ${day7Res.first} part 2 sum: ${day7Res.second}")
+    // 253910319 -> 254083736
 }
