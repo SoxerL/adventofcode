@@ -41,6 +41,13 @@ fun main() {
     // day7
     val camelCards = CamelCards()
     val day7Res = camelCards.execute("day7-input")
-    println("result day 6: part 1 sum: ${day7Res.first} part 2 sum: ${day7Res.second}")
+    println("result day 7: part 1 sum: ${day7Res.first} part 2 sum: ${day7Res.second}")
     // 253910319 -> 254083736
+
+    // day8
+    val wasteland = Wasteland()
+    val day8ResPart1 = wasteland.executePart1("day8-input")
+    val day8RestPart2 = wasteland.executePart2("day8-input")
+    println("result day 8: part 1 sum: $day8ResPart1 part 2 sum: $day8RestPart2")
+    // 16343 -> 15299095336639
 }
