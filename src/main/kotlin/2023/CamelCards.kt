@@ -3,6 +3,12 @@ package `2023`
 import java.lang.IllegalArgumentException
 import kotlin.math.pow
 
+/**
+ * 2023 - day 7
+ * Given a set of pokerhands and winnings rank each hand according to its type and card by card from left to right
+ * Part 1: sum winnings by inversePlace * winnings
+ * Part 2: sum winnings by inversePlace * winnings if J is a joker and J is the least valued card individually
+ */
 class CamelCards {
 
     fun determinType(cards: String): HandType {

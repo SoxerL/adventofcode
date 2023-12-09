@@ -2,7 +2,9 @@ package `2023`
 
 /**
  * 2023 - Day5
- *
+ * Given seeds calculate their placed locations according to the mappings
+ * part 1: lowest location according to seed inputs
+ * Part 2: same as part 1 but input seeds are not ranges as well
  */
 class Fertilizer {
 

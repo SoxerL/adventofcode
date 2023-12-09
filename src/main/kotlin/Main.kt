@@ -50,4 +50,10 @@ fun main() {
     val day8RestPart2 = wasteland.executePart2("day8-input")
     println("result day 8: part 1 sum: $day8ResPart1 part 2 sum: $day8RestPart2")
     // 16343 -> 15299095336639
+
+    // day9
+    val mirageMaintenance = MirageMaintenance()
+    val day9Res = mirageMaintenance.execute("day9-input")
+    println("result day 9: nextElement sum (part1): ${day9Res.second} previousElement sum (part2): ${day9Res.first} ")
+    // 1581679977 -> 889
 }

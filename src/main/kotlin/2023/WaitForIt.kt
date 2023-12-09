@@ -3,6 +3,12 @@ package `2023`
 import kotlin.math.ceil
 import kotlin.math.sqrt
 
+/**
+ * 2023 - day 6
+ * Given a set of maxTimes and reachedDistances, each second adds +1 to speed
+ * Part 1: multiply the number of ways to beat the reachedDistance
+ * Part 2: same as part 1 but concat input to be only one long Time and big Distance
+ */
 class WaitForIt {
 
     fun timeRangeToBeatDistance(timeMax: Double, distance: Long): Long {

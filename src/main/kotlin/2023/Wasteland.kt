@@ -2,6 +2,12 @@ package `2023`
 
 import kotlin.math.abs
 
+/**
+ * 2023 - day 8
+ * Given a set of instructions move along the nodes
+ * Part 1: count steps from AAA -> ZZZ
+ * Part 2: find min amount of steps from all **A -> **Z
+ */
 class Wasteland {
 
     private var nodes: Map<String, Pair<String, String>> = mapOf()
