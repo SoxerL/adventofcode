@@ -23,8 +23,20 @@ class MirageMaintenance {
 
     fun execute(resourceFile: String): Pair<Int, Int> {
         val input = this::class.java.getResourceAsStream(resourceFile)?.bufferedReader()?.readLines()!!
-            .map { it.split(" ").map { e -> e.toInt() } }.map { extraPolateSequence(it) }
+            .map { it.split(" ").map(String::toInt) }.map { extraPolateSequence(it) }
             .reduce { acc, item -> Pair(acc.first + item.first, acc.second + item.second) }
         return input
     }
+
+    // alternative solution, generates the sequences twice
+    fun List<Int>.next(): Int {
+        return lastOrNull()?.let { it + zipWithNext { a, b -> b - a }.next() } ?: 0
+    }
+
+    fun executeAlt(resourceFile: String): Pair<Int, Int> {
+        val input = this::class.java.getResourceAsStream(resourceFile)?.bufferedReader()?.readLines()!!
+            .map { it.split(" ").map(String::toInt) }
+        return Pair(input.sumOf { it.next() }, input.sumOf { it.asReversed().next() })
+    }
+
 }
