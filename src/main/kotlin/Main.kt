@@ -56,4 +56,10 @@ fun main() {
     val day9Res = mirageMaintenance.execute("day9-input")
     println("result day 9: nextElement sum (part1): ${day9Res.second} previousElement sum (part2): ${day9Res.first} ")
     // 1581679977 -> 889
+
+    // day10
+    val pipeMaze = PipeMaze()
+    val day10Res = pipeMaze.execute("day10-input")
+    println("result day 10: sum (part1): ${day10Res.first} sum (part2): ${day10Res.second} ")
+    // 7102 -> 363
 }
