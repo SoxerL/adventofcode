@@ -5,8 +5,8 @@ import java.lang.IllegalArgumentException
 /**
  * 2023 - Day 10
  * Each line shows
- * Part 1:
- * Part 2:
+ * Part 1: Find length of cycle within inputs
+ * Part 2: find area enclosed by cycle
  */
 class PipeMaze {
     private val grid: MutableList<Node> = mutableListOf()
