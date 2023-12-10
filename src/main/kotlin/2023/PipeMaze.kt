@@ -1,6 +1,6 @@
 package `2023`
 
-import java.io.File
+import java.lang.IllegalArgumentException
 
 /**
  * 2023 - Day 10
@@ -9,8 +9,15 @@ import java.io.File
  * Part 2:
  */
 class PipeMaze {
+    private val grid: MutableList<Node> = mutableListOf()
+    private var startPos = -1
+    private var lineLength = 0
 
-    private lateinit var changedMaze: String
+    private fun buildGrid(input: String) {
+        for ((index, c) in input.withIndex()) {
+            grid.add(Node(index, c, Direction.UNKNOWN))
+        }
+    }
 
     fun calculateCycleLength(pos: Int, direction: Direction, input: String, lineLength: Int): Int {
         // recursive returns stackoverflow
@@ -102,10 +109,12 @@ class PipeMaze {
             when (currentMove) {
                 '|' -> {
                     if (currentDirection == Direction.UP && currentPos > lineLength) {
+                        grid[currentPos].direction = Direction.UP
                         currentPos -= lineLength
                         currentMove = input[currentPos]
                         currentDirection = Direction.UP
                     } else if (currentDirection == Direction.DOWN && currentPos < input.length - lineLength) {
+                        grid[currentPos].direction = Direction.DOWN
                         currentPos += lineLength
                         currentMove = input[currentPos]
                         currentDirection = Direction.DOWN
@@ -117,9 +126,11 @@ class PipeMaze {
 
                 '-' -> {
                     if (currentDirection == Direction.RIGHT && currentPos % lineLength < lineLength - 1) {
+                        grid[currentPos].direction = Direction.RIGHT
                         currentMove = input[++currentPos]
                         currentDirection = Direction.RIGHT
                     } else if (currentDirection == Direction.LEFT && currentPos % lineLength > 0) {
+                        grid[currentPos].direction = Direction.LEFT
                         currentMove = input[--currentPos]
                         currentDirection = Direction.LEFT
                     } else {
@@ -130,9 +141,11 @@ class PipeMaze {
 
                 'L' -> {
                     if (currentDirection == Direction.DOWN && currentPos % lineLength < lineLength - 1) {
+                        grid[currentPos].direction = Direction.DOWN
                         currentMove = input[++currentPos]
                         currentDirection = Direction.RIGHT
                     } else if (currentDirection == Direction.LEFT && currentPos > lineLength) {
+                        grid[currentPos].direction = Direction.UP
                         currentPos -= lineLength
                         currentMove = input[currentPos]
                         currentDirection = Direction.UP
@@ -144,9 +157,11 @@ class PipeMaze {
 
                 'J' -> {
                     if (currentDirection == Direction.DOWN && currentPos % lineLength > 0) {
+                        grid[currentPos].direction = Direction.DOWN
                         currentMove = input[--currentPos]
                         currentDirection = Direction.LEFT
                     } else if (currentDirection == Direction.RIGHT && currentPos > lineLength) {
+                        grid[currentPos].direction = Direction.UP
                         currentPos -= lineLength
                         currentMove = input[currentPos]
                         currentDirection = Direction.UP
@@ -158,9 +173,11 @@ class PipeMaze {
 
                 '7' -> {
                     if (currentDirection == Direction.UP && currentPos % lineLength > 0) {
+                        grid[currentPos].direction = Direction.UP
                         currentMove = input[--currentPos]
                         currentDirection = Direction.LEFT
                     } else if (currentDirection == Direction.RIGHT && currentPos < input.length - lineLength) {
+                        grid[currentPos].direction = Direction.DOWN
                         currentPos += lineLength
                         currentMove = input[currentPos]
                         currentDirection = Direction.DOWN
@@ -172,9 +189,11 @@ class PipeMaze {
 
                 'F' -> {
                     if (currentDirection == Direction.UP && currentPos % lineLength < lineLength - 1) {
+                        grid[currentPos].direction = Direction.UP
                         currentMove = input[++currentPos]
                         currentDirection = Direction.RIGHT
                     } else if (currentDirection == Direction.LEFT && currentPos < input.length - lineLength) {
+                        grid[currentPos].direction = Direction.DOWN
                         currentPos += lineLength
                         currentMove = input[currentPos]
                         currentDirection = Direction.DOWN
@@ -191,164 +210,119 @@ class PipeMaze {
             }
             cycleLength++
         }
+        // setStartDirection
+        setStartDirection(direction, currentDirection, startPos)
         return cycleLength
     }
 
+    fun setStartDirection(dirFirstStep: Direction, dirLastStep: Direction, startPos: Int) {
+        when (dirFirstStep) {
+            Direction.RIGHT -> {
+                when (dirLastStep) {
+                    Direction.RIGHT -> {
+                        grid[startPos].direction = Direction.RIGHT
+                    }
+
+                    Direction.UP -> {
+                        grid[startPos].direction = Direction.UP
+                    }
+
+                    Direction.DOWN -> {
+                        grid[startPos].direction = Direction.DOWN
+                    }
+
+                    else -> throw IllegalArgumentException("Direction must be known")
+                }
+            }
+
+            Direction.LEFT -> {
+                when (dirLastStep) {
+                    Direction.LEFT -> {
+                        grid[startPos].direction = Direction.LEFT
+                    }
+
+                    Direction.UP -> {
+                        grid[startPos].direction = Direction.UP
+                    }
+
+                    Direction.DOWN -> {
+                        grid[startPos].direction = Direction.DOWN
+                    }
+
+                    else -> throw IllegalArgumentException("Direction must be known")
+                }
+            }
+
+            Direction.UP -> grid[startPos].direction = Direction.UP
+            Direction.DOWN -> grid[startPos].direction = Direction.DOWN
+            Direction.UNKNOWN -> throw IllegalArgumentException("Direction at start must be known")
+        }
+    }
+
     fun getCycleLength(startPos: Int, input: String, lineLength: Int): Int {
-        val cycles = mutableListOf<Int>()
         // check right
         val rightMove = input[startPos + 1]
         if (rightMove in "-J7") {
-            cycles.add(calculateCycleLengthIterative(startPos + 1, Direction.RIGHT, input, lineLength))
-        }
-        // check down
-        val downMove = input[startPos + lineLength]
-        if (downMove in "|LJ") {
-            cycles.add(calculateCycleLengthIterative(startPos + lineLength, Direction.DOWN, input, lineLength))
+            val foundLength = calculateCycleLengthIterative(startPos + 1, Direction.RIGHT, input, lineLength)
+            if (foundLength != -1) {
+                return foundLength / 2
+            }
         }
         // check left
         val leftMove = input[startPos - 1]
         if (leftMove in "-LF") {
-            cycles.add(calculateCycleLengthIterative(startPos - 1, Direction.LEFT, input, lineLength))
+            val foundLength = calculateCycleLengthIterative(startPos - 1, Direction.LEFT, input, lineLength)
+            if (foundLength != -1) {
+                return foundLength / 2
+            }
+        }
+        // check down
+        val downMove = input[startPos + lineLength]
+        if (downMove in "|LJ") {
+            val foundLength = calculateCycleLengthIterative(startPos + lineLength, Direction.DOWN, input, lineLength)
+            if (foundLength != -1) {
+                return foundLength / 2
+            }
         }
         // check up
         val upMove = input[startPos - lineLength]
         if (upMove in "|7F") {
-            cycles.add(calculateCycleLengthIterative(startPos - lineLength, Direction.UP, input, lineLength))
-        }
-        return cycles.max() / 2
-    }
-
-    fun markOuterDots(lineLength: Int) {
-        var currentIndex = 0
-        val tmpMaze = changedMaze.toCharArray()
-        // top down
-        while (currentIndex < changedMaze.length) {
-            if (changedMaze[currentIndex] == '.') {
-                if (checkForAdjacentOuter(currentIndex, lineLength)) {
-                     tmpMaze[currentIndex] = 'O'
-                    changedMaze = tmpMaze.concatToString()
-                }
+            val foundLength = calculateCycleLengthIterative(startPos - lineLength, Direction.UP, input, lineLength)
+            if (foundLength != -1) {
+                return foundLength / 2
             }
-            currentIndex++
         }
-        // bottom up
-
+        return -1
     }
 
-    fun writeOutput(lineLength: Int) {
-        var counter = 0
-        val f = File("day10-output")
-        while (counter < changedMaze.length - lineLength) {
-            val line = changedMaze.substring(counter, counter + lineLength)
-            counter += lineLength
-            f.appendText(line)
-            f.appendText("\n")
-        }
-    }
-
-    /*
-
-
-    fun calculateAreaOfCycle(lineLength: Int): Int {
+    fun countInside(): Int {
         var area = 0
         var counter = 0
-        val f = File("day10-output")
-        while (counter < changedMaze.size - lineLength) {
-            val line = changedMaze.concatToString().substring(counter, counter + lineLength)
-            counter += lineLength
-
-            f.appendText(line)
-            f.appendText("\n")
-            area += lineEnclosedArea(line)
-        }
-        return area
-    }
-
-    fun lineEnclosedArea(line: String): Int {
-        val xCount = line.count { it == 'X' }
-        var area = 0
-        if (xCount == 0) {
-            return 0
-        }
-        if (xCount %2 == 0) {
-            var isSecond = false
-            var previousIndex = 0
-            for ((index, c) in line.withIndex()) {
-                if (c == 'X') {
-                    if (isSecond) {
-                        area += index - previousIndex - 1
-                        isSecond = false
-                    } else {
-                        isSecond = true
-                        previousIndex = index
+        while (counter < grid.size - lineLength) {
+            val line = grid.subList(counter, counter + lineLength)
+            var crossingCount = 0
+            for (node in line) {
+                if (node.direction == Direction.UNKNOWN) {
+                    if (crossingCount % 2 == 1) {
+                        // inside
+                        area++
                     }
+                } else if (node.symbol in "|JLS") {
+                    crossingCount++
                 }
             }
-        } else {
-            lineEnclosedArea(line.substring(line.indexOfFirst { it == 'X' } + 1))
+            counter += lineLength
         }
         return area
-    }
-
-     */
-
-    /**
-     * if an adjacent field is not part of cycle area the current field cannot be part of it either
-     * returns true if is outer, returns false if no adjacentField is 0 -> could still be outer but needs different checks
-     */
-    private fun checkForAdjacentOuter(symbolPosition: Int, lineLength: Int): Boolean {
-        // each symbol has exactly 8 adjacent fields
-        val lineStart = symbolPosition / lineLength * lineLength
-        val lineEnd = (symbolPosition / lineLength + 1) * lineLength
-        // current
-        if (symbolPosition == 0 || (symbolPosition - 1) % lineLength == lineLength - 1 || changedMaze[symbolPosition - 1] == 'O') {
-            // left bound
-            return true
-        } else if ((symbolPosition + 1) % lineLength == 0 || changedMaze[symbolPosition + 1] == 'O') {
-            // right bound
-            return true
-        }
-        // upper
-        if (lineStart - lineLength >= 0) {
-            // check if adjacent to O
-            if ((symbolPosition - 1 - lineLength) % lineLength == lineLength - 1 || changedMaze[symbolPosition - 1 - lineLength] == 'O') {
-                // left bound
-                return true
-            } else if ((symbolPosition + 1 - lineLength) % lineLength == 0 || changedMaze[symbolPosition + 1 - lineLength] == 'O') {
-                // right bound
-                return true
-            }
-        } else {
-            // at the edge, cannot be part
-            return true
-        }
-        // lower
-        if (lineEnd + lineLength <= changedMaze.length) {
-            // check if adjacent to O
-            if ((symbolPosition - 1 + lineLength) % lineLength == lineLength - 1 || changedMaze[symbolPosition - 1 + lineLength] == 'O') {
-                // left bound
-                return true
-            } else if ((symbolPosition + 1 + lineLength) % lineLength == 0 || changedMaze[symbolPosition + 1 + lineLength] == 'O') {
-                // right bound
-                return true
-            }
-        } else {
-            // at edge cannot be part
-            return true
-        }
-        return false
     }
 
     fun execute(resourceFile: String): Pair<Int, Int> {
         val input = this::class.java.getResourceAsStream(resourceFile)?.bufferedReader()?.readLines()!!
-        val lineLength = input[0].length
+        lineLength = input[0].length
         val continuousInput = input.joinToString("")
-        changedMaze = continuousInput
-        val statPosition = continuousInput.indexOf('S')
-        markOuterDots(lineLength)
-        writeOutput(lineLength)
-        return Pair(getCycleLength(statPosition, continuousInput, lineLength), changedMaze.count { it == '.' })
+        buildGrid(continuousInput)
+        startPos = continuousInput.indexOf('S')
+        return Pair(getCycleLength(startPos, continuousInput, lineLength), countInside())
     }
 }
 
@@ -356,5 +330,12 @@ enum class Direction {
     RIGHT,
     LEFT,
     UP,
-    DOWN
+    DOWN,
+    UNKNOWN
 }
+
+data class Node(
+    val pos: Int,
+    val symbol: Char,
+    var direction: Direction
+)

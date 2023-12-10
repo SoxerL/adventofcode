@@ -26,11 +26,19 @@ class PipeMazeTest {
 
     @Test
     fun `execute returns correct day for part 2 test input`() {
-        var res = pipeMaze.execute("day10-part2-test-input")
+        val res = pipeMaze.execute("day10-part2-test-input")
         assertEquals(4, res.second)
-        res = pipeMaze.execute("day10-part2-test-input-2")
+    }
+
+    @Test
+    fun `execute returns correct day for part 2 test input 2`() {
+        val res = pipeMaze.execute("day10-part2-test-input-2")
         assertEquals(8, res.second)
-        res = pipeMaze.execute("day10-part2-test-input-3")
+    }
+
+    @Test
+    fun `execute returns correct day for part 2 test input 3`() {
+        val res = pipeMaze.execute("day10-part2-test-input-3")
         assertEquals(10, res.second)
     }
 }

@@ -61,5 +61,5 @@ fun main() {
     val pipeMaze = PipeMaze()
     val day10Res = pipeMaze.execute("day10-input")
     println("result day 10: sum (part1): ${day10Res.first} sum (part2): ${day10Res.second} ")
-    //
+    // 7102 -> 363
 }
