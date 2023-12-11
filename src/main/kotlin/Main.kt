@@ -62,4 +62,10 @@ fun main() {
     val day10Res = pipeMaze.execute("day10-input")
     println("result day 10: sum (part1): ${day10Res.first} sum (part2): ${day10Res.second} ")
     // 7102 -> 363
+
+    // day11
+    val cosmicExpansion = CosmicExpansion()
+    val day11Res = cosmicExpansion.execute("day11-input")
+    println("result day 11: sum (part1): ${day11Res.first} sum (part2): ${day11Res.second} ")
+    // 10885634 -> 707505470642
 }
